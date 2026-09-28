@@ -46,7 +46,7 @@ else:
         try:
             stream = client.chat.completions.create(
                 # We are using a different, highly reliable free model here.
-                model="mistralai/mistral-7b-instruct:free", 
+               model="qwen/qwen3.8-27b:free", 
                 messages=[
                     {"role": m["role"], "content": m["content"]}
                     for m in st.session_state.messages
