@@ -4,7 +4,7 @@ from openai import OpenAI
 # Show title and description.
 st.title("💬 Free Chatbot Demo")
 st.write(
-    "This is a simple chatbot using a **free** open-source model via OpenRouter. "
+    "This is a simple chatbot using OpenRouter's **free models router**. "
     "To use this app, you need to provide an OpenRouter API key, which you can get [here](https://openrouter.ai/keys)."
 )
 
@@ -15,7 +15,6 @@ if not openrouter_api_key:
     st.info("Please add your OpenRouter API key to continue.", icon="🗝️")
 else:
     # Create an OpenAI client, but point it to OpenRouter's servers.
-    # We also add the optional headers recommended by OpenRouter.
     client = OpenAI(
         base_url="https://openrouter.ai/api/v1",
         api_key=openrouter_api_key,
@@ -42,11 +41,11 @@ else:
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Generate a response using the OpenRouter API.
+        # Generate a response using the OpenRouter Free Models Router.
         try:
             stream = client.chat.completions.create(
-                # We are using a different, highly reliable free model here.
-               model: "openrouter/free", 
+                # This router automatically picks a working free model
+                model="openrouter/free",
                 messages=[
                     {"role": m["role"], "content": m["content"]}
                     for m in st.session_state.messages
@@ -62,4 +61,4 @@ else:
         except Exception as e:
             # If OpenRouter rejects the request, show a friendly error message.
             st.error(f"An error occurred: {e}")
-            st.info("Tip: This often happens if the free model is busy. Check your OpenRouter privacy settings or try a different free model.")
+            st.info("Tip: This often happens if the free model is busy. Try again in a moment.")
