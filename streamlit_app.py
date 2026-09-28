@@ -46,7 +46,7 @@ else:
         try:
             stream = client.chat.completions.create(
                 # We are using a different, highly reliable free model here.
-                model="meta-llama/llama-3.3-70b-instruct:free", 
+                model="mistralai/mistral-7b-instruct:free", 
                 messages=[
                     {"role": m["role"], "content": m["content"]}
                     for m in st.session_state.messages
